@@ -5,11 +5,10 @@ module.exports = new Event("messageCreate", (client, message) => {
 
   if (!message.content.startsWith(client.prefix)) return;
 
-  console.log(client.prefix.length)
-
   // will get removed on later versions
   const args = message.content.substring(client.prefix.length).split(/ +/);
 
+  // return the command if it is equal to the good stuff
   const command = client.commands.find(cmd => {
     if(cmd.name == args[0]) {
       return cmd;
