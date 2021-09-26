@@ -1,6 +1,5 @@
 // update.js variables: export {update, tempFrameTransf, saveData, ITEM_URL};
 const update = require("../Scripts/updateLocalData.js");
-const test = require("../Scripts/test.js")
 const Discord = require("discord.js");
 
 const Command = require("../Structures/Command.js")
