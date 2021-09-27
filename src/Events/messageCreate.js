@@ -1,14 +1,17 @@
 const Event = require("../Structures/Event.js");
+const inputParser = require("../Scripts/inputParser.js")
 
 module.exports = new Event("messageCreate", (client, message) => {
   if (message.author.bot) return;
 
   if (!message.content.startsWith(client.prefix)) return;
 
-  // will get removed on later versions
-  const args = message.content.substring(client.prefix.length).split(/ +/);
+  // return 3 arguments, command name, charactername and move name,
+  const noPrefixMessage = message.content.substring(client.prefix.length)
+  const args = inputParser.inputParser(noPrefixMessage);
 
-  // return the command if it is equal to the good stuff
+
+  // return the command if it is equal to the first argument
   const command = client.commands.find(cmd => {
     if(cmd.name == args[0]) {
       return cmd;

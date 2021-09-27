@@ -2,19 +2,19 @@ const fs = require("fs");
 
 // const name = "sol";
 
-// // multiple spaces will be reduced to single space
-// // space at the front will be reduced to 0 space
-// // add \\ in front of '[' and ']'
+// multiple spaces will be reduced to single space
+// space at the front will be reduced to 0 space
+// add \\ in front of '[' and ']'
 // const move = "j.236K";
 
-const handleMove = (matched, charData) => {
+const handleMove = (matched, charData, move) => {
   if (matched.length == 0) {
     console.log(`${move} cannot be found.`)
   } else if (matched.length > 1) {
     console.log("Multiple moves found");
   } else {
-    console.log(charData[matched]);
-    return(charData[matched]);
+    console.log("Matched input: " + matched[0]['input']);
+    return(matched);
   }
 }
  
@@ -36,37 +36,51 @@ const regexFind = (charData, move) => {
     regex = regex + move.substring(i , i + 1) + "[ \\[\\]\\.]?";
   }
   let moveRegex = new RegExp(regex, 'i');
-  
-  let moveNames = Object.keys(charData);
 
-  moveNames.forEach(moveName => {
-    if (moveName.match(moveRegex)) {
-      matched.push(moveName, charData)
+  charData.forEach(singleMove => {
+    if (singleMove['name']) {
+      if (singleMove['name'].match(moveRegex) || singleMove['input'].match(moveRegex)) {
+        matched.push(singleMove);
+        console.log("Regex Match: ", matched[matched.length - 1]['input']);
+      }
+    } else {
+      if (singleMove['input'].match(moveRegex)) {
+        matched.push(singleMove);
+        console.log("Regex Match: ", matched[matched.length - 1]['input']);
+      }
     }
   })
-  console.log("Regex Match: ", matched)
-  return handleMove(matched);
+
+  return handleMove(matched, charData, move);
 }
 
 const absoluteFind = (charData, move) => {
   let matched = [];
-  let moveNames = Object.keys(charData);
-  let moveRegex = new RegExp("^(?:" + move + ")$", 'i');
-  moveNames.forEach(moveName => {
-    if (moveName.match(moveRegex)) {
-      matched.push(moveName)
-      console.log("Absolute Match: ", matched)
+  let moveRegex = new RegExp("^(" + move + ")\\b", 'i');
+  charData.forEach(singleMove => {
+    if (singleMove['name']) {
+      if (singleMove['name'].match(moveRegex) || singleMove['input'].match(moveRegex)) {
+        matched.push(singleMove);
+        console.log("Absolute Match: ", matched[matched.length - 1]['input']);
+      }
+    } else {
+      if (singleMove['input'].match(moveRegex)) {
+        matched.push(singleMove);
+        console.log("Absolute Match: ", matched[matched.length - 1]['input']);
+      }
     }
   })
   if (matched.length == 0) {
     return regexFind(charData, move);
   } else {
-    return handleMove(matched, charData);
+    return handleMove(matched, charData, move);
   }
 }
 
 const parseJSON = (charName, move) => {
-  let charData = require(`../Data/frameData/${charName}`);
+  let charArray = require(`../Data/frameData/${charName}`);
+  let charData = charArray;
+
   return absoluteFind(charData, move)
 } 
 
@@ -88,11 +102,10 @@ const searchChar = (name, move) => {
     if (match != null) {
       matched.push(match.input)
     }
-  })
-  
+  })  
 
   if (matched.length == 1) {
-    let matchedMoves = parseJSON(matched[0], move);
+    let matchedMoves = parseJSON(matched[0], move)[0];
     
     return {
       name,

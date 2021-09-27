@@ -63,93 +63,55 @@ const updateLocalData = async() => {
     await page.goto(links[i], {waitUntil:"networkidle2"});
 
     // Global variable to store temperary data
-    let data = [];
+    let data = {};
 
-    let columnLabel = ["input", "name", "damage", "guard", "startup", "active", "recovery", "onBlock", "onHit", "riscGain", "level", "invuln", "prorate"];
-
-    // Loading the column label above, but in row
-    let rowData = await page.$$eval("#DataTables_Table_1_wrapper table thead tr .sorting", elements => elements.map(name => name.innerText))
-
+    let columnLabel = ["input", "name", "damage", "guard", "startup", "active", "recovery", "onBlock", "onHit", "riscGain", "level", "invuln", "prorate"];    
 
     // Generate character name
     let characterName = await page.$eval("tbody tr .field_name", element => element.innerText);
 
     // Store frame data of normal move in object
-    let unsortedNormalMoves = await page.$$eval("#DataTables_Table_0_wrapper table tbody tr td", elements => elements.map(name => name.innerText))
-    if (rowData.length == 14) {
-      let currentSplice = 11;
-      while (currentSplice < unsortedNormalMoves.length) {
-        unsortedNormalMoves.splice(currentSplice, 1);
-        currentSplice += 13;
-      }
-    }
-    let normalMoves = {}
+    let unsortedNormalMoves = await page.$$eval("#DataTables_Table_0_wrapper table tbody tr td:not(.details-control)", elements => elements.map(name => name.innerText))
+    let normalMovesRowData = await page.$$eval("#DataTables_Table_0_wrapper table thead tr .sorting", elements => elements.map(name => name.innerText))
+    let normalMoves = [];
     for (let j = 0; j < unsortedNormalMoves.length; j++) {
-      if (j % 13 === 0) {
-        continue;
-      } 
-      data.push(unsortedNormalMoves[j]);
-      if (j % 13 == 12) {
-        let button = data[0];
-        data.splice(1, 0, button)
-        normalMoves[button] = data;
-        data = [];
+      data[normalMovesRowData[j%normalMovesRowData.length]] = unsortedNormalMoves[j];
+      if (j % normalMovesRowData.length + 1 == normalMovesRowData.length && j != 0) {
+        // data["name"] = data["input"];
+        normalMoves.push(data);
+        data = {};
       }
     }
     
     // store frame data of special move in object
-    let unsortedSpecialMoves = await page.$$eval("#DataTables_Table_1_wrapper table tbody tr td", elements => elements.map(name => name.innerText));
-    if (rowData.length == 14) {
-      let currentSplice = 12;
-      while (currentSplice < unsortedSpecialMoves.length) {
-        unsortedSpecialMoves.splice(currentSplice, 1);
-        currentSplice += 14;
-      }
-    }
-    let specialMoves = {};
+    let unsortedSpecialMoves = await page.$$eval("#DataTables_Table_1_wrapper table tbody tr td:not(.details-control)", elements => elements.map(name => name.innerText));
+    let specialMovesRowData = await page.$$eval("#DataTables_Table_1_wrapper table thead tr .sorting", elements => elements.map(name => name.innerText))
+    let specialMoves = [];
     for (let j = 0; j < unsortedSpecialMoves.length;j++) {
-      if (j % 14 == 0) {
-        continue;
-      }
-      data.push(unsortedSpecialMoves[j]);
-      if (j % 14 == 13) {
-        let buttonPress = data[0];
-        let buttonName = data[1];
-        specialMoves[buttonPress] = data;
-        specialMoves[buttonName] = data;
-        data = [];
+      data[specialMovesRowData[j%specialMovesRowData.length]] = unsortedSpecialMoves[j];
+      if (j % specialMovesRowData.length + 1 == specialMovesRowData.length && j != 0) {        
+        specialMoves.push(data);
+        data = {};
       }
     }
 
     // store frame data of supers in object
-    let unsortedSupers = await page.$$eval("#DataTables_Table_2_wrapper table tbody tr td", elements => elements.map(name => name.innerText));
-    if (rowData.length == 14) {
-      let currentSplice = 12;
-      while (currentSplice < unsortedSupers.length) {
-        unsortedSupers.splice(currentSplice, 1);
-        currentSplice += 14;
-      }
-    }
-    let specialSupers = {};
+    let unsortedSupers = await page.$$eval("#DataTables_Table_2_wrapper table tbody tr td:not(.details-control)", elements => elements.map(name => name.innerText));
+    let supersRowData = await page.$$eval("#DataTables_Table_1_wrapper table thead tr .sorting", elements => elements.map(name => name.innerText))
+    let specialSupers = [];
     for (let j = 0; j < unsortedSupers.length;j++) {
-      if (j % 14 == 0) {
-        continue;
-      }
-      data.push(unsortedSupers[j]);
-      if (j % 14 == 13) {
-        let buttonPress = data[0];
-        let buttonName = data[1];
-        specialSupers[buttonPress] = data;
-        specialSupers[buttonName] = data;
-        data = [];
+      data[supersRowData[j%supersRowData.length]] = unsortedSupers[j];
+      if (j % supersRowData.length + 1 == supersRowData.length && j != 0) {        
+        specialSupers.push(data);
+        data = {};
       }
     }
 
-    let charFrameData = {
+    let charFrameData = [
       ...normalMoves,
       ...specialMoves,
       ...specialSupers
-    }
+    ]
 
     saveData(charFrameData, characterName);
 
