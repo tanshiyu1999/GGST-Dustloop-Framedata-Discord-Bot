@@ -18,10 +18,30 @@ const makeFields = (matchedMoves) => {
     tempObj = {}
   }
 
-
   return output;
-
-  
 }
 
-module.exports = {makeFields};
+const makeInputFields = (matchedMoves) => {
+  let tempObj = {};
+  let output = [];
+  
+  for (let i = 0; i < matchedMoves.length; i++) {
+    if (matchedMoves[i]['name']) {
+      tempObj.name = `${i + 1}: ${matchedMoves[i]['name']}`;
+    } else {
+      tempObj.name = matchedMoves[i]['input'];
+    }
+    tempObj.value = matchedMoves[i]['input'];
+    tempObj.inline = false;
+    output.push(tempObj);
+    tempObj = {};
+  }
+  return output;
+}
+
+
+
+
+
+
+module.exports = {makeFields, makeInputFields};

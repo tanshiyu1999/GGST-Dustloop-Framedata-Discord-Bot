@@ -1,17 +1,11 @@
 const fs = require("fs");
 
-// const name = "sol";
-
-// multiple spaces will be reduced to single space
-// space at the front will be reduced to 0 space
-// add \\ in front of '[' and ']'
-// const move = "j.236K";
-
 const handleMove = (matched, charData, move) => {
   if (matched.length == 0) {
     console.log(`${move} cannot be found.`)
   } else if (matched.length > 1) {
     console.log("Multiple moves found");
+    return matched;
   } else {
     console.log("Matched input: " + matched[0]['input']);
     return(matched);
@@ -95,17 +89,17 @@ const searchChar = (name, move) => {
 
   const fileNames = fs.readdirSync("./src/Data/frameData").filter(file => file.endsWith(".json"));
 
-  let matched = [];
+  let matchedName = [];
 
   fileNames.forEach(element => {
     let match = element.match(searchName);
     if (match != null) {
-      matched.push(match.input)
+      matchedName.push(match.input)
     }
   })  
 
-  if (matched.length == 1) {
-    let matchedMoves = parseJSON(matched[0], move)[0];
+  if (matchedName.length == 1) {
+    let matchedMoves = parseJSON(matchedName[0], move)//[0]; // This is an object in an array
     
     return {
       name,

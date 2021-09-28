@@ -1,6 +1,12 @@
 // First word is consistent, it is the command
 const fs = require("fs");
 
+// TO BE ADDED
+
+// multiple spaces will be reduced to single space
+// space at the front will be reduced to 0 space
+// add \\ in front of '[' and ']'
+// const move = "j.236K";
 
 const inputParser = (message) => {
   let args = message.split(/ +/);
