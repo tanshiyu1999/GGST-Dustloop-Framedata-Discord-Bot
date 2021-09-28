@@ -3,6 +3,7 @@ const fs = require("fs");
 const handleMove = (matched, charData, move) => {
   if (matched.length == 0) {
     console.log(`${move} cannot be found.`)
+    return [];
   } else if (matched.length > 1) {
     console.log("Multiple moves found");
     return matched;
@@ -100,9 +101,10 @@ const searchChar = (name, move) => {
 
   if (matchedName.length == 1) {
     let matchedMoves = parseJSON(matchedName[0], move)//[0]; // This is an object in an array
+    let charName = matchedName[0];
     
     return {
-      name,
+      charName,
       matchedMoves
     }
   }

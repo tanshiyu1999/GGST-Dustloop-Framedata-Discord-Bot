@@ -1,6 +1,7 @@
-
+// Input is a single object
 const makeFields = (matchedMoves) => {
   // generate a list of objects, if the value of object == "", convert to " ".
+  // console.log(matchedMoves)
   let keys = Object.keys(matchedMoves);
 
   let tempObj = {};

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tanshiyu1999/GGST-Dustloop-Framedata-Discord-Bot#readme",
   "dependencies": {
     "discord.js": "^13.1.0",
+    "eventemitter3": "^4.0.7",
     "puppeteer": "^10.4.0"
   }
 }
