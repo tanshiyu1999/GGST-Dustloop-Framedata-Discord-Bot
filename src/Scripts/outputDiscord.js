@@ -21,8 +21,8 @@ const outputDiscord = (matchedMoves, message, name) => {
       "https://ferotiq.dev/"
     )
     .setTitle(`Frame data for ${((singleMatch.name) ? singleMatch.name : singleMatch.input)}`)
-    .setURL("https://avatars.githubusercontent.com/u/42184874?v=4")
-    .setThumbnail("https://avatars.githubusercontent.com/u/42184874?v=4")
+    // .setURL("")
+    // .setThumbnail("https://avatars.githubusercontent.com/u/42184874?v=4")
     .setColor("BLURPLE")
     .addFields(...fieldValues)
     .setFooter("Data provided by dustloop", "https://dustloop.com/wiki/images/thumb/3/30/Dustloop_Wiki.png/175px-Dustloop_Wiki.png")
