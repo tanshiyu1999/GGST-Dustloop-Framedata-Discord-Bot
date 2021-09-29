@@ -26,7 +26,7 @@ const outputDiscord = (matchedMoves, message, name) => {
     .setColor("BLURPLE")
     .addFields(...fieldValues)
     .setFooter("Data provided by dustloop", "https://dustloop.com/wiki/images/thumb/3/30/Dustloop_Wiki.png/175px-Dustloop_Wiki.png")
-  message.reply({embeds:[output]});
+  message.channel.send({embeds:[output]});
 }
 
 module.exports = {outputDiscord};

@@ -24,7 +24,7 @@ module.exports = new Command({
         .setDescription('Please ensure that you have entered the command correctly \n !f (Name) (Move)')
         .setThumbnail('attachment://thinkingMay.png')
         .setColor("RED")
-      message.reply({
+      message.channel.send({
         embeds:[output],
         files: ['./src/Images/thinkingMay.png']
       });
@@ -35,7 +35,7 @@ module.exports = new Command({
         .setDescription('May not smug enough to handle this load')
         .setThumbnail('attachment://thinkingMay.png')
         .setColor("RED")
-      message.reply({
+      message.channel.send({
         embeds:[output],
         files: ['./src/Images/thinkingMay.png']
       });
@@ -47,7 +47,7 @@ module.exports = new Command({
         .setDescription("Please select one of the following: ")
         .setColor("BLUE")
         .addFields(...inputFieldValues);
-      let confirmedMessage = await message.reply({embeds:[confirmMove]})
+      let confirmedMessage = await message.channel.send({embeds:[confirmMove]})
 
       let emojiUsed = [];
       for (let i = 0; i < matchedMoves.length; i++) {
@@ -128,7 +128,7 @@ module.exports = new Command({
         .setDescription('Please ensure that you have entered the command correctly \n !f (Name) (Move)')
         .setThumbnail('attachment://thinkingMay.png')
         .setColor("RED")
-      message.reply({
+      message.channel.send({
         embeds:[output],
         files: ['./src/Images/thinkingMay.png']
       });
