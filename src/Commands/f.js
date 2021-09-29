@@ -14,10 +14,21 @@ module.exports = new Command({
     let {charName, matchedMoves} = FindFrameData.searchChar(args[1], args[2]); // matchedMoves is an object in an array;
 
     // name will contain in a object format, charName, charPortrait, charLink
-    let name = charName.replace(".json", "")
+    let name = charName//.replace(".json", "")
     
 
-    if (matchedMoves.length > 10) {
+    if (!matchedMoves) {
+      const output = new Discord.MessageEmbed();
+      output
+        .setTitle(`${name} cannot be found`)
+        .setDescription('Please ensure that you have entered the command correctly \n !f (Name) (Move)')
+        .setThumbnail('attachment://thinkingMay.png')
+        .setColor("RED")
+      message.reply({
+        embeds:[output],
+        files: ['./src/Images/thinkingMay.png']
+      });
+    } else if (matchedMoves.length > 10) {
       const output = new Discord.MessageEmbed();
       output
         .setTitle(`${args[2]} has too many matches`)
@@ -121,7 +132,7 @@ module.exports = new Command({
         embeds:[output],
         files: ['./src/Images/thinkingMay.png']
       });
-    }
+    } 
   }
 })
 

@@ -101,11 +101,16 @@ const searchChar = (name, move) => {
 
   if (matchedName.length == 1) {
     let matchedMoves = parseJSON(matchedName[0], move)//[0]; // This is an object in an array
-    let charName = matchedName[0];
+    let charName = matchedName[0].replace(".json", "");
     
     return {
       charName,
       matchedMoves
+    }
+  } else if (matchedName.length == 0) {
+    let charName = name;
+    return {
+      charName
     }
   }
 }

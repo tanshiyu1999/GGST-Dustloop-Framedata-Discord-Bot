@@ -10,6 +10,10 @@ module.exports = new Event("messageCreate", (client, message) => {
   const noPrefixMessage = message.content.substring(client.prefix.length)
   const args = inputParser.inputParser(noPrefixMessage);
 
+  if (noPrefixMessage == 'f') {
+    return;
+  }
+
 
   // return the command if it is equal to the first argument
   const command = client.commands.find(cmd => {
@@ -20,7 +24,7 @@ module.exports = new Event("messageCreate", (client, message) => {
 
   if (!command){
     console.log(command);
-    return message.reply(`${args[0]} is not a valid command!`)
+    return; //message.reply(`${args[0]} is not a valid command!`)
   }
   command.run(message, args, client);
 

@@ -16,7 +16,9 @@ const outputDiscord = (matchedMoves, message, name) => {
   const fieldValues = Field.makeFields(singleMatch);
   output
     .setAuthor(
-
+      name,
+      message.author.avatarURL({dynamic: true}),
+      "https://ferotiq.dev/"
     )
     .setTitle(`Frame data for ${((singleMatch.name) ? singleMatch.name : singleMatch.input)}`)
     .setURL("https://avatars.githubusercontent.com/u/42184874?v=4")
