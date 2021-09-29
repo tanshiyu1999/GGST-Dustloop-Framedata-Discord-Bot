@@ -54,7 +54,10 @@ const updateLocalData = async() => {
     console.log("tempFrameData diretory created \n")
   }
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ 
+    headless: true,
+    args: ['--no-sandbox','--disable-setuid-sandbox'] 
+  });
   const page = await browser.newPage();
   await page.goto(ITEM_URL);
   let links = await page.$$eval("#mw-content-text > div > div > P > a", elements => elements.map(name => name.href));
