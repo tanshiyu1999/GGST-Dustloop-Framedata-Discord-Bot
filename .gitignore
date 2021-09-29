@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Discord Bot Data
-# src/Data/config.json
+src/Data/config.json

@@ -4,7 +4,8 @@
   "description": "GGST Frame data bot",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,11 @@
     "eventemitter3": "^4.0.7",
     "express": "^4.17.1",
     "puppeteer": "^10.4.0"
+  },
+  "engines": {
+    "node":"16.9.0"
+  },
+  "devDependencies": {
+    "node": "^16.9.0"
   }
 }
