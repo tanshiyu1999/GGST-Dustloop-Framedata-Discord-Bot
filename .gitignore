@@ -1,3 +1,6 @@
+# Discord Bot Data
+src/Data/config.json
+
 # Logs
 logs
 *.log
@@ -103,5 +106,4 @@ dist
 # TernJS port file
 .tern-port
 
-# Discord Bot Data
-src/Data/config.json
+
