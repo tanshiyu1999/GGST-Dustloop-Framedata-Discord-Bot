@@ -68,8 +68,6 @@ const updateLocalData = async() => {
     // Global variable to store temperary data
     let data = {};
 
-    let columnLabel = ["input", "name", "damage", "guard", "startup", "active", "recovery", "onBlock", "onHit", "riscGain", "level", "invuln", "prorate"];    
-
     // Generate character name
     let characterName = await page.$eval("tbody tr .field_name", element => element.innerText);
 

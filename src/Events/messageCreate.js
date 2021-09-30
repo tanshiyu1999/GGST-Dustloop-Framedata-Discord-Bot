@@ -6,6 +6,10 @@ module.exports = new Event("messageCreate", (client, message) => {
 
   if (!message.content.startsWith(client.prefix)) return;
 
+  // remove [ and ]
+  message.content = message.content.replace("[", "").replace("]", "")
+  console.log(message.content)
+
   // return 3 arguments, command name, charactername and move name,
   const noPrefixMessage = message.content.substring(client.prefix.length)
   const args = inputParser.inputParser(noPrefixMessage);

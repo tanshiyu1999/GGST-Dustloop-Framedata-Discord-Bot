@@ -17,8 +17,7 @@ const outputDiscord = (matchedMoves, message, name) => {
   output
     .setAuthor(
       name,
-      message.author.avatarURL({dynamic: true}),
-      "https://ferotiq.dev/"
+      message.author.avatarURL({dynamic: true})
     )
     .setTitle(`Frame data for ${((singleMatch.name) ? singleMatch.name : singleMatch.input)}`)
     // .setURL("")
